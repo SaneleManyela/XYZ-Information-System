@@ -1,0 +1,105 @@
+CREATE SCHEMA XYZInformationSystem;
+
+CREATE TABLE tblregistrars(
+
+ID int(11) NOT NULL AUTO_INCREMENT,
+
+Name varchar(55) NOT NULL,
+
+Password varchar(55) NOT NULL,
+
+PRIMARY KEY (ID)
+
+);
+
+CREATE TABLE tblteachers(
+
+ID int(11) NOT NULL AUTO_INCREMENT,
+
+Name varchar(55) NOT NULL,
+
+Password varchar(55) NOT NULL,
+
+PRIMARY KEY (ID)
+
+);
+
+CREATE TABLE tblbursar(
+
+ID int(11) NOT NULL AUTO_INCREMENT,
+
+Name varchar(55) NOT NULL,
+
+Password varchar(55) NOT NULL,
+
+PRIMARY KEY (ID)
+
+);
+
+CREATE TABLE tblclass(
+
+ID int(11) NOT NULL AUTO_INCREMENT,
+
+Class varchar(255) DEFAULT NULL,
+
+ClassAmount decimal(10,0) NOT NULL,
+
+ClassTeacher int(11) NOT NULL,
+
+PRIMARY KEY (ID),
+
+CONSTRAINT fkClassTeacher
+
+FOREIGN KEY(ClassTeacher) REFERENCES tblteachers(ID)
+
+);
+
+CREATE TABLE tblstudents(
+
+ID int(11) NOT NULL AUTO_INCREMENT,
+
+Name varchar(55) NOT NULL,
+
+DoB date NOT NULL,
+
+Gender varchar(1) NOT NULL,
+
+Address varchar(255) NOT NULL,
+
+Password varchar(55) NOT NULL,
+
+ClassEnrolledIn int(11) NOT NULL,
+
+RegisteredBy int(11) NOT NULL,
+
+PRIMARY KEY (ID),
+
+CONSTRAINT fkClassEnrolledIn
+
+FOREIGN KEY (ClassEnrolledIn) REFERENCES tblclass(ID),
+
+CONSTRAINT fkRegisteredBy
+
+FOREIGN KEY (RegisteredBy) REFERENCES tblregistrars(ID)
+
+);
+
+CREATE TABLE tblaccounts(
+
+ID int(11) NOT NULL AUTO_INCREMENT,
+
+Student int(11) NOT NULL,
+
+PaymentDate date NOT NULL,
+
+Amount decimal(10,0) NOT NULL,
+
+FeesToBePaid decimal(10,0) DEFAULT NULL,
+
+PRIMARY KEY (ID),
+
+CONSTRAINT fkStudentPayments
+
+FOREIGN KEY(Student) REFERENCES tblstudents(ID)
+
+);
